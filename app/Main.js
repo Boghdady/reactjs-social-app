@@ -1,18 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-function ExampleComponent() {
+import Footer from './components/Footer';
+import Header from './components/Header';
+import HomeGuest from './components/HomeGuest';
+
+
+function Main() {
   return (
-    <div>
-      <h1>This is our app!!!!</h1>
-      <p>The sky is bluess.</p>
-      <h3>Welcome to reactjs</h3>
-    </div>
+<>
+  <Header/>
+  <HomeGuest/>
+  <Footer/>
+</>
+
   );
 }
 
 // Render our app
-ReactDOM.render(<ExampleComponent/>, document.querySelector('#app'));
+ReactDOM.render(<Main/>, document.querySelector('#app'));
 
 // I want the brwoser not do refresh i need only load new javascript automatically to the browser
 if(module.hot) module.hot.accept();

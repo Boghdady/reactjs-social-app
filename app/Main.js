@@ -1,17 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Footer from './components/Footer';
-import Header from './components/Header';
-import HomeGuest from './components/HomeGuest';
+import Header from './components/Footer';
+import Footer from './components/Header';
 
 function Main() {
   return (
-    <>
+    <BrowserRouter>
       <Header />
-      <HomeGuest />
+      <Switch>
+        <Route path="/" exact>
+          <HomeGuest />
+        </Route>
+        <Route path="/about-us">
+          <About />
+        </Route>
+        <Route path="/terms">
+          <Terms />
+        </Route>
+      </Switch>
       <Footer />
-    </>
+    </BrowserRouter>
   );
 }
 

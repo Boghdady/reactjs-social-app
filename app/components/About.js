@@ -1,10 +1,12 @@
 import React from 'react';
 
+import Container from './Container';
+
 function About() {
   return (
-    <div classname="container container--narrow py-md-5">
+    <Container>
       <h2>About Us</h2>
-      <p classname="lead text-muted">
+      <p className="lead text-muted">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
         dolorum labore quisquam vel id dicta fuga! Ducimus, quo. Dolore commodi
         aliquid error veritatis consequuntur, excepturi cumque fuga eum incidunt
@@ -24,7 +26,7 @@ function About() {
         nobis provident quo dolorum sapiente temporibus facere non repellendus
         consequatur cupiditate!
       </p>
-    </div>
+    </Container>
   );
 }
 

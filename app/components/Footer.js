@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
@@ -19,9 +19,9 @@ function Footer() {
       </p>
       <p className="m-0">
         Copyright © 2020{' '}
-        <a href="/" className="text-muted">
+        <Link to="/" className="text-muted">
           ComplexApp
-        </a>
+        </Link>
         . All rights reserved.
       </p>
     </footer>

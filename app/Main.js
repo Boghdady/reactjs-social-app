@@ -1,8 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import Header from './components/Footer';
-import Footer from './components/Header';
+import About from './components/About';
+import Footer from './components/Footer';
+import Header from './components/Header';
+import HomeGuest from './components/HomeGuest';
+import Terms from './components/Terms';
 
 function Main() {
   return (

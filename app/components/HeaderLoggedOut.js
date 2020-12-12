@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import React, { useState } from 'react';
 
-function HeaderLoggedOut() {
+function HeaderLoggedOut(props) {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
 
@@ -14,6 +14,7 @@ function HeaderLoggedOut() {
       });
       if (response.data) {
         console.log(response.data);
+        props.setIsLoggedIn(true);
       } else {
         console.log('Incorrect email or password');
       }

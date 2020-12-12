@@ -13,8 +13,11 @@ function HeaderLoggedOut(props) {
         password,
       });
       if (response.data) {
-        console.log(response.data);
+        // Add user data to local storage
         props.setIsLoggedIn(true);
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('username', response.data.username);
+        localStorage.setItem('avatar', response.data.avatar);
       } else {
         console.log('Incorrect email or password');
       }

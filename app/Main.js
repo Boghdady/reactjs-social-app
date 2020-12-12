@@ -1,20 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import About from './components/About';
 import Footer from './components/Footer';
 import Header from './components/Header';
+import Home from './components/Home';
 import HomeGuest from './components/HomeGuest';
 import Terms from './components/Terms';
 
 function Main() {
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    Boolean(localStorage.getItem('token'))
+  );
   return (
     <BrowserRouter>
-      <Header />
+      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <Switch>
         <Route path="/" exact>
-          <HomeGuest />
+          {isLoggedIn ? <Home /> : <HomeGuest />}
         </Route>
         <Route path="/about-us">
           <About />

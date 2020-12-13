@@ -4,7 +4,7 @@ import Page from './Page';
 
 function Home() {
   return (
-    <Page>
+    <Page title="Home">
       <div>
         <h2 className="text-center">
           Hello <strong>{localStorage.getItem('username')}</strong>, your feed

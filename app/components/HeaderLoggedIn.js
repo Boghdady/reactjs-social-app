@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function HeaderLoggedIn(props) {
   function handleLoggedOut() {
@@ -23,9 +24,9 @@ function HeaderLoggedIn(props) {
           src="https://en.gravatar.com/userimage/99340211/9eed838f80f9f210e2b81da61be538be.jpg"
         />
       </a>
-      <a className="btn btn-sm btn-success mr-2" href="/create-post">
+      <Link className="btn btn-sm btn-success mr-2" to="/create-post">
         Create Post
-      </a>
+      </Link>
       <button onClick={handleLoggedOut} className="btn btn-sm btn-secondary">
         Sign Out
       </button>

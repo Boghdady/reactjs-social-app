@@ -1,21 +1,23 @@
 import Axios from 'axios';
 import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import Page from './Page';
 
-function CreatePost() {
+function CreatePost(props) {
   const [title, setTitle] = useState();
   const [body, setBody] = useState();
 
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      await Axios.post('/create-post', {
+      const response = await Axios.post('/create-post', {
         title,
         body,
         token: localStorage.getItem('token'),
       });
-      console.log('Post created successfully!');
+      // Redirect to view post page
+      props.history.push(`post/${response.data}`);
     } catch (err) {
       console.log(err);
     }
@@ -57,4 +59,4 @@ function CreatePost() {
   );
 }
 
-export default CreatePost;
+export default withRouter(CreatePost);

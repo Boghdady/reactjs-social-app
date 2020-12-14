@@ -10,6 +10,7 @@ import Header from './components/Header';
 import Home from './components/Home';
 import HomeGuest from './components/HomeGuest';
 import Terms from './components/Terms';
+import ViewSinglePost from './components/ViewSinglePost';
 
 Axios.defaults.baseURL = 'http://localhost:8080';
 
@@ -26,6 +27,9 @@ function Main() {
         </Route>
         <Route path="/create-post">
           <CreatePost />
+        </Route>
+        <Route path="/post/:id">
+          <ViewSinglePost />
         </Route>
         <Route path="/about-us">
           <About />

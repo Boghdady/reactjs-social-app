@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import About from './components/About';
 import CreatePost from './components/CreatePost';
+import FlashMessages from './components/FlashMessages';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Home from './components/Home';
@@ -18,15 +19,22 @@ function Main() {
   const [isLoggedIn, setIsLoggedIn] = useState(
     Boolean(localStorage.getItem('token'))
   );
+  const [flashMessages, setFlashMessages] = useState([]);
+
+  function showFlashMessage(msg) {
+    setFlashMessages((prevMsg) => prevMsg.concat(msg));
+  }
+
   return (
     <BrowserRouter>
+      <FlashMessages flashMessages={flashMessages} />
       <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <Switch>
         <Route path="/" exact>
           {isLoggedIn ? <Home /> : <HomeGuest />}
         </Route>
         <Route path="/create-post">
-          <CreatePost />
+          <CreatePost showFlashMessage={showFlashMessage} />
         </Route>
         <Route path="/post/:id">
           <ViewSinglePost />

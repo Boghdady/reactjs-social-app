@@ -17,6 +17,7 @@ function CreatePost(props) {
         token: localStorage.getItem('token'),
       });
       // Redirect to view post page
+      props.showFlashMessage('User created successfully');
       props.history.push(`post/${response.data}`);
     } catch (err) {
       console.log(err);

@@ -2,14 +2,14 @@ import Axios from 'axios';
 import React, { useContext, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 
-import AppContext from '../AppContext';
+import DispatchContext from '../DispatchContext';
 import Page from './Page';
 
 function CreatePost(props) {
   const [title, setTitle] = useState();
   const [body, setBody] = useState();
 
-  const { addFlashMessage } = useContext(AppContext);
+  const appDispatch = useContext(DispatchContext);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -20,7 +20,11 @@ function CreatePost(props) {
         token: localStorage.getItem('token'),
       });
       // Redirect to view post page
-      addFlashMessage('User created successfully');
+      appDispatch({
+        type: 'flashMessages',
+        value: 'Congrat 😎 User created successfully',
+      });
+
       props.history.push(`post/${response.data}`);
     } catch (err) {
       console.log(err);

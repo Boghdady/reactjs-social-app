@@ -1,13 +1,13 @@
 import Axios from 'axios';
 import React, { useContext, useState } from 'react';
 
-import AppContext from '../AppContext';
+import DispatchContext from '../DispatchContext';
 
-function HeaderLoggedOut(props) {
+function HeaderLoggedOut() {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
 
-  const { setIsLoggedIn } = useContext(AppContext);
+  const appDispatch = useContext(DispatchContext);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -18,7 +18,7 @@ function HeaderLoggedOut(props) {
       });
       if (response.data) {
         // Add user data to local storage
-        setIsLoggedIn(true);
+        appDispatch({ type: 'login' });
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('username', response.data.username);
         localStorage.setItem('avatar', response.data.avatar);

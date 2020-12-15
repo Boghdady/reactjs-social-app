@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-import AppContext from '../AppContext';
+import DispatchContext from '../DispatchContext';
 
 function HeaderLoggedIn() {
-  const { setIsLoggedIn } = useContext(AppContext);
+  const appDispatch = useContext(DispatchContext);
 
   function handleLoggedOut() {
-    setIsLoggedIn(false);
+    appDispatch({ type: 'logout' });
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     localStorage.removeItem('avatar');

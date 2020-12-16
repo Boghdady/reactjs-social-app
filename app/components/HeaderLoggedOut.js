@@ -17,11 +17,7 @@ function HeaderLoggedOut() {
         password,
       });
       if (response.data) {
-        // Add user data to local storage
-        appDispatch({ type: 'login' });
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('username', response.data.username);
-        localStorage.setItem('avatar', response.data.avatar);
+        appDispatch({ type: 'login', data: response.data });
       } else {
         console.log('Incorrect email or password');
       }

@@ -1,7 +1,8 @@
 import Axios from 'axios';
-import React, { useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { useImmerReducer } from 'use-immer';
 
 import About from './components/About';
 import CreatePost from './components/CreatePost';
@@ -17,30 +18,50 @@ import StateContext from './StateContext';
 
 Axios.defaults.baseURL = 'http://localhost:8080';
 
+// 1) Context : Help us to share our data throuth out app
+// 2) Reducer : Help us to keep logic in a centeral location
+// 3) Immer : Give us a copy of state (draft) that we free to modify on it
+
 function Main() {
   const initState = {
     isLoggedIn: Boolean(localStorage.getItem('token')),
     flashMessages: [],
+    user: {
+      token: localStorage.getItem('token'),
+      username: localStorage.getItem('username'),
+      avatar: localStorage.getItem('avatar'),
+    },
   };
 
-  function ourReducer(state, action) {
+  function ourReducer(draft, action) {
     switch (action.type) {
       case 'login':
-        return {
-          isLoggedIn: true,
-          flashMessages: state.flashMessages,
-        };
+        draft.isLoggedIn = true;
+        draft.user = action.data;
+        return;
       case 'logout':
-        return { isLoggedIn: false, flashMessages: state.flashMessages };
+        draft.isLoggedIn = false;
+        return;
       case 'flashMessages':
-        return {
-          isLoggedIn: state.isLoggedIn,
-          flashMessages: state.flashMessages.concat(action.value),
-        };
+        draft.flashMessages.push(action.value);
+        return;
     }
   }
 
-  const [state, dispatch] = useReducer(ourReducer, initState);
+  const [state, dispatch] = useImmerReducer(ourReducer, initState);
+
+  // When [isLoggedIn] changed the function in the first arg called
+  useEffect(() => {
+    if (state.isLoggedIn) {
+      localStorage.setItem('token', state.user.token);
+      localStorage.setItem('username', state.user.username);
+      localStorage.setItem('avatar', state.user.avatar);
+    } else {
+      localStorage.removeItem('token');
+      localStorage.removeItem('username');
+      localStorage.removeItem('avatar');
+    }
+  }, [state.isLoggedIn]);
 
   return (
     <StateContext.Provider value={state}>

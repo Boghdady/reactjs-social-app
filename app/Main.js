@@ -11,6 +11,7 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import Home from './components/Home';
 import HomeGuest from './components/HomeGuest';
+import Profile from './components/Profile';
 import Terms from './components/Terms';
 import ViewSinglePost from './components/ViewSinglePost';
 import DispatchContext from './DispatchContext';
@@ -70,6 +71,9 @@ function Main() {
           <FlashMessages />
           <Header />
           <Switch>
+            <Route path="/profile/:username">
+              <Profile />
+            </Route>
             <Route path="/" exact>
               {state.isLoggedIn ? <Home /> : <HomeGuest />}
             </Route>

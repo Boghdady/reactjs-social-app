@@ -15,13 +15,18 @@ function ViewSinglePost() {
 
   // Fetch Post data
   useEffect(() => {
+    const ourRequest = Axios.CancelToken.source();
     async function fetchPost() {
-      const response = await Axios.get(`/post/${id}`);
+      const response = await Axios.get(`/post/${id}`, {
+        cancelToken: ourRequest.token,
+      });
       setPost(response.data);
       setIsLoading(false);
-      console.log(response.data);
     }
     fetchPost();
+    return () => {
+      ourRequest.cancel();
+    };
   }, []);
 
   if (isLoading)

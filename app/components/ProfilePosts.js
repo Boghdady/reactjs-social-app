@@ -13,15 +13,25 @@ function ProfilePosts() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    async function fetchProfilePosts() {
-      const response = await Axios.get(`/profile/${username}/posts`, {
-        token: appState.user.token,
-      });
+    try {
+      const ourRequest = Axios.CancelToken.source();
+      async function fetchProfilePosts() {
+        const response = await Axios.get(`/profile/${username}/posts`, {
+          token: appState.user.token,
+          cancelToken: ourRequest.token,
+        });
 
-      setPosts(response.data);
-      setIsloading(false);
+        setPosts(response.data);
+        setIsloading(false);
+      }
+      fetchProfilePosts();
+      // Clean up
+      return () => {
+        ourRequest.cancel();
+      };
+    } catch (e) {
+      console.log('error or request cancelled');
     }
-    fetchProfilePosts();
   }, []);
 
   if (isLoading) return <LoadingDotsIcon />;

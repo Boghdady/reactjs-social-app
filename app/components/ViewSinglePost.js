@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import StateContext from '../StateContext';
+import LoadingDotsIcon from './LoadingDotsIcon';
 import Page from './Page';
 
 function ViewSinglePost() {
@@ -26,7 +27,7 @@ function ViewSinglePost() {
   if (isLoading)
     return (
       <Page title=".....">
-        <div>Loading...</div>
+        <LoadingDotsIcon />
       </Page>
     );
 

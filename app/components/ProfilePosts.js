@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import ContextState from '../StateContext';
+import LoadingDotsIcon from './LoadingDotsIcon';
 
 function ProfilePosts() {
   const appState = useContext(ContextState);
@@ -23,7 +24,7 @@ function ProfilePosts() {
     fetchProfilePosts();
   }, []);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadingDotsIcon />;
   return (
     <div className="list-group">
       {posts.map(function (post) {

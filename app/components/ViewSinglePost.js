@@ -1,6 +1,8 @@
 import Axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { Link, useParams } from 'react-router-dom';
+import ReactTooltip from 'react-tooltip';
 
 import StateContext from '../StateContext';
 import LoadingDotsIcon from './LoadingDotsIcon';
@@ -49,14 +51,23 @@ function ViewSinglePost() {
           <span className="pt-2">
             <Link
               to={`profile/${id}`}
+              data-tip="Edit"
+              data-for="edit"
               className="text-primary mr-2"
-              title="Edit"
             >
               <i className="fas fa-edit" />
             </Link>
-            <a className="delete-post-button text-danger" title="Delete">
+            <ReactTooltip id="edit" />{' '}
+            <Link
+              to="#"
+              data-tip="Delete"
+              data-for="delete"
+              className="delete-post-button text-danger"
+              title="Delete"
+            >
               <i className="fas fa-trash" />
-            </a>
+            </Link>
+            <ReactTooltip id="delete" />
           </span>
         </div>
         <p className="text-muted small mb-4">
@@ -70,7 +81,20 @@ function ViewSinglePost() {
           {`on ${formattedDate}`}
         </p>
         <div className="body-content">
-          <p>{post.body}</p>
+          <div>
+            <ReactMarkdown
+              source={post.body}
+              allowedTypes={[
+                'paragraph',
+                'strong',
+                'emphasis',
+                'text',
+                'heading',
+                'list',
+                'listItem',
+              ]}
+            />
+          </div>
         </div>
       </div>
     </Page>

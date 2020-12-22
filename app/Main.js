@@ -1,11 +1,12 @@
 import Axios from 'axios';
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useImmerReducer } from 'use-immer';
 
 import About from './components/About';
 import CreatePost from './components/CreatePost';
+import EditPost from './components/EditPost';
 import FlashMessages from './components/FlashMessages';
 import Footer from './components/Footer';
 import Header from './components/Header';
@@ -80,8 +81,11 @@ function Main() {
             <Route path="/create-post">
               <CreatePost />
             </Route>
-            <Route path="/post/:id">
+            <Route path="/post/:id" exact>
               <ViewSinglePost />
+            </Route>
+            <Route path="/post/:id/edit" exact>
+              <EditPost />
             </Route>
             <Route path="/about-us">
               <About />

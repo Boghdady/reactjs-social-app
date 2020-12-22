@@ -50,7 +50,7 @@ function ViewSinglePost() {
           <h2>{post.title}</h2>
           <span className="pt-2">
             <Link
-              to={`profile/${id}`}
+              to={`/post/${post._id}/edit`}
               data-tip="Edit"
               data-for="edit"
               className="text-primary mr-2"

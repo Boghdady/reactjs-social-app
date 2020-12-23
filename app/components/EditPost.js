@@ -34,6 +34,9 @@ function EditPost() {
     switch (action.type) {
       case 'fetchPostComplete':
         return;
+      case 'submitRequest':
+        draft.sendCount++;
+        return;
     }
   }
 
@@ -60,6 +63,24 @@ function EditPost() {
     return () => {
       ourRequest.cancel();
     };
+  }, []);
+
+  useEffect(() => {
+    const ourRequest = Axios.CancelToken.source();
+    async function updatePost() {
+      const response = await Axios.post(
+        `/post/${state.id}/edit`,
+        {
+          title: state.title.value,
+          body: state.body.value,
+          token: appState.user.token,
+        },
+        { cancelToken: ourRequest.token }
+      );
+      dispatch({ type: 'savingRequestFinished', value: response.data });
+      appDispatch({ type: 'flashMessage', value: 'Post updated successfully' });
+    }
+    updatePost();
   }, []);
 
   if (isLoading) return <div>Loading.....</div>;

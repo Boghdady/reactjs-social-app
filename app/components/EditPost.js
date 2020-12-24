@@ -24,7 +24,7 @@ function EditPost() {
       errorMsg: '',
     },
     isPostFetching: true,
-    isPostSaved: false,
+    isPostSaving: false,
     id: useParams().id,
     sendCount: 0,
   };
@@ -37,19 +37,36 @@ function EditPost() {
         draftOfState.isPostFetching = false;
         return;
       case 'titleChange':
+        draftOfState.title.hasError = false;
         draftOfState.title.value = action.value;
+        return;
+      case 'titleRules':
+        if (!action.value.trim()) {
+          draftOfState.title.hasError = true;
+          draftOfState.title.errorMsg = 'You should write a title';
+          return;
+        }
         return;
       case 'bodyChange':
         draftOfState.body.value = action.value;
+        draftOfState.body.hasError = false;
+        return;
+      case 'bodyRules':
+        if (!action.value.trim()) {
+          draftOfState.body.hasError = true;
+          draftOfState.body.errorMsg = 'You should write a body content';
+        }
         return;
       case 'submitRequest':
-        draftOfState.sendCount++;
+        if (!draftOfState.title.hasError && !draftOfState.body.hasError) {
+          draftOfState.sendCount++;
+        }
         return;
       case 'updateRequestStarted':
-        draftOfState.isPostSaved = false;
+        draftOfState.isPostSaving = true;
         return;
       case 'updateRequestFinished':
-        draftOfState.isPostSaved = true;
+        draftOfState.isPostSaving = false;
         return;
     }
   }
@@ -58,6 +75,8 @@ function EditPost() {
 
   function submitHandler(e) {
     e.preventDefault();
+    dispatch({ type: 'titleRules', value: state.title.value });
+    dispatch({ type: 'bodyRules', value: state.body.value });
     dispatch({ type: 'submitRequest' });
   }
 
@@ -98,8 +117,8 @@ function EditPost() {
           );
           dispatch({ type: 'updateRequestFinished', value: response.data });
           appDispatch({
-            type: 'flashMessage',
-            value: 'Post updated successfully',
+            type: 'flashMessages',
+            value: 'Update Post successfully 👍',
           });
         } catch (err) {
           console.log('There are a problem or request are canceled');
@@ -127,9 +146,11 @@ function EditPost() {
             <small>Title</small>
           </label>
           <input
-            autoFocus
             onChange={(e) =>
               dispatch({ type: 'titleChange', value: e.target.value })
+            }
+            onBlur={(e) =>
+              dispatch({ type: 'titleRules', value: e.target.value })
             }
             value={state.title.value}
             name="title"
@@ -138,7 +159,16 @@ function EditPost() {
             type="text"
             placeholder=""
             autoComplete="off"
+            autoFocus
           />
+          {
+            // Error
+            state.title.hasError && (
+              <div className="alert alert-danger small liveValidateMessage">
+                {state.title.errorMsg}
+              </div>
+            )
+          }
         </div>
         <div className="form-group">
           <label htmlFor="post-body" className="text-muted mb-1 d-block">
@@ -149,14 +179,25 @@ function EditPost() {
             onChange={(e) =>
               dispatch({ type: 'bodyChange', value: e.target.value })
             }
+            onBlur={(e) =>
+              dispatch({ type: 'bodyRules', value: e.target.value })
+            }
             name="body"
             id="post-body"
             className="body-content tall-textarea form-control"
             type="text"
             // defaultValue={''}
           />
+          {
+            // Error
+            state.body.hasError && (
+              <div className="alert alert-danger small liveValidateMessage">
+                {state.body.errorMsg}
+              </div>
+            )
+          }
         </div>
-        <button className="btn btn-primary" disabled={state.isPostSaved}>
+        <button className="btn btn-primary" disabled={state.isPostSaving}>
           Save Updates
         </button>
       </form>

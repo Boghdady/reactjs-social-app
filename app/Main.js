@@ -12,6 +12,7 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import Home from './components/Home';
 import HomeGuest from './components/HomeGuest';
+import NotFound from './components/NotFound';
 import Profile from './components/Profile';
 import Terms from './components/Terms';
 import ViewSinglePost from './components/ViewSinglePost';
@@ -92,6 +93,9 @@ function Main() {
             </Route>
             <Route path="/terms">
               <Terms />
+            </Route>
+            <Route>
+              <NotFound />
             </Route>
           </Switch>
           <Footer />

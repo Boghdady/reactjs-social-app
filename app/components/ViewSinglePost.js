@@ -6,6 +6,7 @@ import ReactTooltip from 'react-tooltip';
 
 import StateContext from '../StateContext';
 import LoadingDotsIcon from './LoadingDotsIcon';
+import NotFound from './NotFound';
 import Page from './Page';
 
 function ViewSinglePost() {
@@ -30,6 +31,10 @@ function ViewSinglePost() {
       ourRequest.cancel();
     };
   }, []);
+
+  if (!isLoading && !post) {
+    return <NotFound />;
+  }
 
   if (isLoading)
     return (

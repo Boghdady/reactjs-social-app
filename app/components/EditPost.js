@@ -6,6 +6,7 @@ import { useImmerReducer } from 'use-immer';
 import DispatchContext from '../DispatchContext';
 import StateContext from '../StateContext';
 import LoadingDotsIcon from './LoadingDotsIcon';
+import NotFound from './NotFound';
 import Page from './Page';
 
 function EditPost() {
@@ -27,6 +28,7 @@ function EditPost() {
     isPostSaving: false,
     id: useParams().id,
     sendCount: 0,
+    notFound: false,
   };
 
   function ourReducer(draftOfState, action) {
@@ -68,6 +70,8 @@ function EditPost() {
       case 'updateRequestFinished':
         draftOfState.isPostSaving = false;
         return;
+      case 'pageNotFond':
+        draftOfState.notFound = true;
     }
   }
 
@@ -88,7 +92,11 @@ function EditPost() {
         const response = await Axios.get(`/post/${state.id}`, {
           cancelToken: ourRequest.token,
         });
-        dispatch({ type: 'fetchPostComplete', value: response.data });
+        if (response.data) {
+          dispatch({ type: 'fetchPostComplete', value: response.data });
+        } else {
+          dispatch({ type: 'pageNotFond' });
+        }
       } catch (err) {
         console.log('There was a problem or the request was cancelled');
       }
@@ -130,6 +138,10 @@ function EditPost() {
       };
     }
   }, [state.sendCount]);
+
+  if (state.notFound) {
+    return <NotFound />;
+  }
 
   if (state.isPostFetching) {
     return (

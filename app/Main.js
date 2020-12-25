@@ -19,7 +19,7 @@ import ViewSinglePost from './components/ViewSinglePost';
 import DispatchContext from './DispatchContext';
 import StateContext from './StateContext';
 
-Axios.defaults.baseURL = 'http://localhost:8080';
+Axios.defaults.baseURL = 'http://localhost:7070';
 
 // 1) Context : Help us to share our data throuth out app
 // 2) Reducer : Help us to keep logic in a centeral location

@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import React, { useContext, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useImmerReducer } from 'use-immer';
 
 import DispatchContext from '../DispatchContext';
@@ -140,7 +140,10 @@ function EditPost() {
   }
   return (
     <Page title="Eidt Post">
-      <form onSubmit={submitHandler}>
+      <Link className="small font-weight-bold" to={`/post/${state.id}`}>
+        &laquo; Back to post permalink
+      </Link>
+      <form className="mt-3" onSubmit={submitHandler}>
         <div className="form-group">
           <label htmlFor="post-title" className="text-muted mb-1">
             <small>Title</small>

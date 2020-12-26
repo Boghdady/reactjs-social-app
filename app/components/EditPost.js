@@ -158,6 +158,7 @@ function EditPost(props) {
       </Page>
     );
   }
+
   return (
     <Page title="Eidt Post">
       <Link className="small font-weight-bold" to={`/post/${state.id}`}>

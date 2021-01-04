@@ -14,6 +14,7 @@ import Home from './components/Home';
 import HomeGuest from './components/HomeGuest';
 import NotFound from './components/NotFound';
 import Profile from './components/Profile';
+import Search from './components/Search';
 import Terms from './components/Terms';
 import ViewSinglePost from './components/ViewSinglePost';
 import DispatchContext from './DispatchContext';
@@ -98,6 +99,7 @@ function Main() {
               <NotFound />
             </Route>
           </Switch>
+          <Search />
           <Footer />
         </BrowserRouter>
       </DispatchContext.Provider>

@@ -35,6 +35,7 @@ function Main() {
       username: localStorage.getItem('username'),
       avatar: localStorage.getItem('avatar'),
     },
+    isSearchOpen: false,
   };
 
   function ourReducer(draft, action) {
@@ -48,6 +49,12 @@ function Main() {
         return;
       case 'flashMessages':
         draft.flashMessages.push(action.value);
+        return;
+      case 'openSearch':
+        draft.isSearchOpen = true;
+        return;
+      case 'closeSearch':
+        draft.isSearchOpen = false;
         return;
     }
   }
@@ -99,7 +106,7 @@ function Main() {
               <NotFound />
             </Route>
           </Switch>
-          <Search />
+          {state.isSearchOpen ? <Search /> : ''}
           <Footer />
         </BrowserRouter>
       </DispatchContext.Provider>

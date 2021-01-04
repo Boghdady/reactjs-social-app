@@ -1,6 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
+
+import DispatchContext from '../DispatchContext';
 
 function Search() {
+  const appDispatch = useContext(DispatchContext);
+
+  useEffect(() => {
+    // will listen for any key
+    document.addEventListener('keyup', searchKeyPressHandler);
+
+    // clean up
+    // return document.removeEventListener('keyup', searchKeyPressHandler);
+  }, []);
+
+  function searchKeyPressHandler(e) {
+    if (e.keyCode == 27) {
+      console.log('jdsjh');
+      appDispatch({ type: 'closeSearch' });
+    }
+  }
+
   return (
     <div className="search-overlay">
       <div className="search-overlay-top shadow-sm">
@@ -9,14 +28,17 @@ function Search() {
             <i className="fas fa-search" />
           </label>
           <input
-            autofocus
+            autoFocus
             type="text"
             autoComplete="off"
             id="live-search-field"
             className="live-search-field"
             placeholder="What are you interested in?"
           />
-          <span className="close-live-search">
+          <span
+            onClick={() => appDispatch({ type: 'closeSearch' })}
+            className="close-live-search"
+          >
             <i className="fas fa-times-circle" />
           </span>
         </div>

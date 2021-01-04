@@ -10,16 +10,16 @@ function Search() {
     document.addEventListener('keyup', searchKeyPressHandler);
 
     // clean up
-    // return document.removeEventListener('keyup', searchKeyPressHandler);
+    return () => document.removeEventListener('keyup', searchKeyPressHandler);
   }, []);
 
   function searchKeyPressHandler(e) {
     if (e.keyCode == 27) {
-      console.log('jdsjh');
       appDispatch({ type: 'closeSearch' });
     }
   }
 
+  // react-transition-group
   return (
     <div className="search-overlay">
       <div className="search-overlay-top shadow-sm">

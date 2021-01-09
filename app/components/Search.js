@@ -6,7 +6,8 @@ import DispatchContext from '../DispatchContext';
 function Search() {
   const appDispatch = useContext(DispatchContext);
 
-  const [state, useState] = useImmer({
+  // useImmer like useState but useImmer take mutable object
+  const [state, setState] = useImmer({
     searchTerm: '',
     results: [],
     show: 'neither',
@@ -16,10 +17,13 @@ function Search() {
   useEffect(() => {
     // will listen for any key
     document.addEventListener('keyup', searchKeyPressHandler);
-
     // clean up
     return () => document.removeEventListener('keyup', searchKeyPressHandler);
   }, []);
+
+  useEffect(() => {
+    console.log(state.searchTerm);
+  }, [state.searchTerm]);
 
   function searchKeyPressHandler(e) {
     if (e.keyCode == 27) {
@@ -27,7 +31,12 @@ function Search() {
     }
   }
 
-  function handleInput(e) {}
+  function handleInput(e) {
+    const value = e.target.value;
+    setState((draft) => {
+      draft.searchTerm = value;
+    });
+  }
 
   // react-transition-group
   return (

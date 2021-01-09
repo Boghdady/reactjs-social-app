@@ -1,9 +1,17 @@
 import React, { useContext, useEffect } from 'react';
+import { useImmer } from 'use-immer';
 
 import DispatchContext from '../DispatchContext';
 
 function Search() {
   const appDispatch = useContext(DispatchContext);
+
+  const [state, useState] = useImmer({
+    searchTerm: '',
+    results: [],
+    show: 'neither',
+    requestCount: 0,
+  });
 
   useEffect(() => {
     // will listen for any key
@@ -19,6 +27,8 @@ function Search() {
     }
   }
 
+  function handleInput(e) {}
+
   // react-transition-group
   return (
     <div className="search-overlay">
@@ -28,6 +38,7 @@ function Search() {
             <i className="fas fa-search" />
           </label>
           <input
+            onChange={handleInput}
             autoFocus
             type="text"
             autoComplete="off"

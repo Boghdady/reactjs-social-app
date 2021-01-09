@@ -22,7 +22,13 @@ function Search() {
   }, []);
 
   useEffect(() => {
-    console.log(state.searchTerm);
+    const delay = setTimeout(() => {
+      setState((draft) => {
+        draft.requestCount++;
+      });
+    }, 3000);
+    // clenup
+    return () => clearTimeout(delay);
   }, [state.searchTerm]);
 
   function searchKeyPressHandler(e) {

@@ -1,3 +1,4 @@
+import Axios from 'axios';
 import React, { useContext, useEffect } from 'react';
 import { useImmer } from 'use-immer';
 
@@ -30,6 +31,29 @@ function Search() {
     // clenup
     return () => clearTimeout(delay);
   }, [state.searchTerm]);
+
+  useEffect(() => {
+    if (state.requestCount) {
+      const ourRequest = Axios.CancelToken.source();
+      async function fetchResults() {
+        try {
+          const response = await Axios.post(
+            '/search',
+            {
+              searchTerm: state.searchTerm,
+            },
+            { cancelToken: ourRequest.token }
+          );
+          console.log(response.data);
+        } catch (e) {
+          console.log('There is a problem or the request has been cancelled');
+        }
+      }
+      fetchResults();
+
+      return () => ourRequest.cancel();
+    }
+  }, [state.requestCount]);
 
   function searchKeyPressHandler(e) {
     if (e.keyCode == 27) {

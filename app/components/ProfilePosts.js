@@ -1,9 +1,6 @@
 import Axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
 
-import ContextState from '../StateContext';
-import LoadingDotsIcon from './LoadingDotsIcon';
 
 function ProfilePosts() {
   const appState = useContext(ContextState);
